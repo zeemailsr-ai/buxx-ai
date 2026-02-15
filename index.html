@@ -1,107 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>buXXai | Unlimited Design & Content Agency</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
-    
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              brand: {
-                DEFAULT: '#7d182e', 
-                dark: '#4a0e1b',    
-                light: '#a62441',   
-                surface: '#0f172a', 
-              },
-              cream: { 50: '#FDFBF7', 100: '#F7F3EB', 200: '#EBE5D5' },
-            },
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              display: ['Outfit', 'sans-serif'],
-            },
-            animation: {
-              'blob': 'blob 10s infinite',
-              'fade-in': 'fadeIn 1s ease-out forwards',
-            },
-            keyframes: {
-              blob: {
-                '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-                '100%': { transform: 'translate(0px, 0px) scale(1)' },
-              },
-              fadeIn: {
-                '0%': { opacity: '0', transform: 'translateY(20px)' },
-                '100%': { opacity: '1', transform: 'translateY(0)' },
-              }
-            }
-          }
-        }
-      }
-    </script>
-
-    <script type="importmap">
-    {
-      "imports": {
-        "react": "https://esm.sh/react@18.2.0",
-        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-        "lucide-react": "https://esm.sh/lucide-react@0.344.0"
-      }
-    }
-    </script>
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>buXXai | Agency</title>
     <style>
-      body { background-color: #0f172a; color: white; }
-      .glass-card {
-        background: rgba(255, 255, 255, 0.03);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(125, 24, 46, 0.2);
-      }
+        /* Reset and Basic Setup */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: #0f172a; /* Navy Dark */
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* The Background Glow */
+        .glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(125, 24, 46, 0.4) 0%, rgba(15, 23, 42, 0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 1rem;
+            background: linear-gradient(to bottom, #ffffff, #aaaaaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            font-size: 1.5rem;
+            color: #94a3b8; /* Slate gray */
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .status {
+            margin-top: 2rem;
+            padding: 10px 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: #7d182e; /* Brand Red */
+            background: rgba(255,255,255,0.05);
+            text-transform: uppercase;
+            font-weight: bold;
+        }
     </style>
-  </head>
-  <body>
-    <div id="root"></div>
+</head>
+<body>
 
-    <script type="module">
-      import React from 'react';
-      import ReactDOM from 'react-dom/client';
-      import { Sparkles, ArrowRight } from 'lucide-react';
+    <div class="glow"></div>
 
-      function App() {
-        return React.createElement(
-          'div',
-          { className: "min-h-screen relative overflow-hidden flex flex-col items-center justify-center p-6" },
-          
-          // Background Blobs
-          React.createElement('div', { className: "fixed top-0 left-1/4 w-96 h-96 bg-brand/20 rounded-full blur-[100px] animate-blob pointer-events-none" }),
-          React.createElement('div', { className: "fixed bottom-0 right-1/4 w-96 h-96 bg-brand-light/10 rounded-full blur-[100px] animate-blob pointer-events-none", style: { animationDelay: '2s' } }),
+    <h1>buXXai</h1>
+    <p>Unlimited Design & Content</p>
+    
+    <div class="status">
+        ● System Operational
+    </div>
 
-          // Main Content
-          React.createElement('div', { className: "relative z-10 max-w-4xl w-full text-center animate-fade-in" },
-            React.createElement('h1', { className: "font-display text-7xl md:text-9xl font-bold tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-white/50" }, "buXXai"),
-            React.createElement('p', { className: "text-xl md:text-2xl text-cream-200/80 font-light tracking-wide mb-12" }, "Unlimited Design & Content Agency"),
-            
-            // Glass Card Box
-            React.createElement('div', { className: "glass-card p-8 rounded-2xl max-w-md mx-auto" },
-              React.createElement('div', { className: "flex items-center justify-center gap-2 text-brand-light font-bold mb-2 uppercase tracking-widest text-sm" },
-                React.createElement(Sparkles, { size: 16 }),
-                "Coming Soon"
-              ),
-              React.createElement('p', { className: "text-white/60 text-sm" }, "We are building something extraordinary.")
-            )
-          )
-        );
-      }
-
-      const root = ReactDOM.createRoot(document.getElementById('root'));
-      root.render(React.createElement(App));
-    </script>
-  </body>
+</body>
 </html>
