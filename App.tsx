@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/layout/Header';
@@ -10,24 +9,35 @@ import ServicesPage from './components/pages/ServicesPage';
 import HowItWorksPage from './components/pages/HowItWorksPage';
 import PricingPage from './components/pages/PricingPage';
 import AIToolsPage from './components/pages/AIToolsPage';
+import QuizModal from './components/ui/QuizModal';
 
 // --- Theme Context Setup ---
 type Theme = 'light' | 'dark';
 interface ThemeContextType {
   theme: Theme;
   toggleTheme: () => void;
+  isQuizOpen: boolean;
+  openQuiz: () => void;
+  closeQuiz: () => void;
 }
-export const ThemeContext = createContext<ThemeContextType>({ theme: 'light', toggleTheme: () => {} });
+export const ThemeContext = createContext<ThemeContextType>({ 
+  theme: 'light', 
+  toggleTheme: () => {},
+  isQuizOpen: false,
+  openQuiz: () => {},
+  closeQuiz: () => {}
+});
 
 export const useTheme = () => useContext(ThemeContext);
 
 const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>(() => {
-    // Check local storage or system preference
     const saved = localStorage.getItem('theme');
     if (saved === 'dark' || saved === 'light') return saved;
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
+
+  const [isQuizOpen, setIsQuizOpen] = useState(false);
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -39,12 +49,12 @@ const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light');
-  };
+  const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
+  const openQuiz = () => setIsQuizOpen(true);
+  const closeQuiz = () => setIsQuizOpen(false);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, isQuizOpen, openQuiz, closeQuiz }}>
       {children}
     </ThemeContext.Provider>
   );
@@ -53,11 +63,9 @@ const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 // --- Scroll To Top ---
 const ScrollToTop = () => {
   const { pathname } = useLocation();
-
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
-
   return null;
 };
 
@@ -80,10 +88,16 @@ const App: React.FC = () => {
             </Routes>
           </main>
           <Footer />
+          <ContextualQuiz />
         </div>
       </Router>
     </ThemeProvider>
   );
+};
+
+const ContextualQuiz = () => {
+    const { isQuizOpen, closeQuiz } = useTheme();
+    return <QuizModal isOpen={isQuizOpen} onClose={closeQuiz} />;
 };
 
 export default App;

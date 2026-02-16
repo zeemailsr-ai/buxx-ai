@@ -3,11 +3,13 @@ import { Menu, X, ChevronDown, Mail, Palette, Sparkles, Monitor, Clapperboard } 
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '../ui/Logo';
+import { useTheme } from '../../App';
 
 const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { openQuiz } = useTheme();
   const location = useLocation();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -110,12 +112,12 @@ const Header: React.FC = () => {
 
         {/* Action Button */}
         <div className="flex items-center gap-8">
-          <a 
-            href="/pricing" 
+          <button 
+            onClick={openQuiz}
             className="hidden lg:block bg-brand hover:bg-brand-dark text-white font-black text-[15px] uppercase tracking-[0.15em] px-12 py-5 rounded-full border-2 border-brand-dark shadow-[0_15px_40px_-10px_rgba(125,24,46,0.4)] transition-all hover:-translate-y-1.5 active:translate-y-0 active:shadow-none"
           >
             FREE TRIAL
-          </a>
+          </button>
 
           {/* Mobile Toggle */}
           <button 
@@ -181,13 +183,12 @@ const Header: React.FC = () => {
                 </div>
               ))}
               <div className="pt-20 mt-auto">
-                <a 
-                  href="/pricing" 
+                <button 
+                  onClick={() => { setMobileMenuOpen(false); openQuiz(); }}
                   className="block w-full text-center bg-brand text-white font-black text-[22px] uppercase tracking-widest py-8 rounded-full border-2 border-brand-dark shadow-[15px_15px_0px_0px_rgba(125,24,46,0.1)] active:translate-x-1 active:translate-y-1 active:shadow-none"
-                  onClick={() => setMobileMenuOpen(false)}
                 >
                   START FREE TRIAL
-                </a>
+                </button>
               </div>
             </nav>
           </motion.div>

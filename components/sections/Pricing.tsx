@@ -1,9 +1,8 @@
-
 import React from 'react';
 import Section from '../ui/Section';
-import Button from '../ui/Button';
 import { Check, Info, Lock, Rocket, BarChart3, Building2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTheme } from '../../App';
 
 interface PlanFeature {
   text: string;
@@ -113,7 +112,7 @@ const FeatureItem: React.FC<{ feature: PlanFeature }> = ({ feature }) => (
   </li>
 );
 
-const PricingCard: React.FC<{ plan: PricingPlan }> = ({ plan }) => (
+const PricingCard: React.FC<{ plan: PricingPlan; onTrigger: () => void }> = ({ plan, onTrigger }) => (
   <div className={`relative flex flex-col bg-white rounded-[20px] p-8 md:p-10 transition-all duration-300 ${plan.highlight ? 'ring-4 ring-brand/10 shadow-2xl scale-[1.02] z-10' : 'shadow-xl'}`}>
     {plan.tag && (
       <div className="absolute top-6 right-6">
@@ -137,13 +136,12 @@ const PricingCard: React.FC<{ plan: PricingPlan }> = ({ plan }) => (
       {plan.description}
     </p>
 
-    <Button 
-      href="https://calendly.com/zeemailsr/buxxai-demo-call" 
-      variant="primary" 
-      className="!bg-brand hover:!bg-brand-dark text-white font-bold text-[16px] rounded-lg py-3.5 mb-10 w-full tracking-normal capitalize"
+    <button 
+      onClick={onTrigger}
+      className="bg-brand hover:bg-brand-dark text-white font-black text-[16px] rounded-lg py-4 mb-10 w-full uppercase tracking-wider shadow-lg shadow-brand/20 transition-all active:scale-95"
     >
       Choose plan
-    </Button>
+    </button>
 
     <div className="space-y-8">
       <div>
@@ -164,42 +162,17 @@ const PricingCard: React.FC<{ plan: PricingPlan }> = ({ plan }) => (
 );
 
 const Pricing: React.FC = () => {
+  const { openQuiz } = useTheme();
+
   return (
     <Section id="pricing" variant="white" className="!bg-[#0D011D] !py-24 md:!py-32 relative">
-      {/* Decorative Illustrations */}
-      <div className="absolute left-4 top-24 md:left-10 md:top-40 w-32 md:w-56 opacity-80 pointer-events-none hidden lg:block">
-        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M40 80H160V120H40V80Z" fill="white" stroke="#333" strokeWidth="2" />
-          <rect x="50" y="85" width="5" height="30" fill="#333" />
-          <rect x="65" y="85" width="5" height="30" fill="#333" />
-          <rect x="80" y="85" width="5" height="30" fill="#333" />
-          <rect x="115" y="85" width="5" height="30" fill="#333" />
-          <rect x="130" y="85" width="5" height="30" fill="#333" />
-          <rect x="145" y="85" width="5" height="30" fill="#333" />
-          <circle cx="100" cy="100" r="30" fill="#7d182e" stroke="#333" strokeWidth="3" />
-          <circle cx="100" cy="100" r="12" fill="#F472B6" />
-          <path d="M90 130L85 160M110 130L115 160" stroke="white" strokeWidth="4" strokeLinecap="round" />
-        </svg>
-      </div>
-
-      <div className="absolute right-4 bottom-20 md:right-10 md:bottom-40 w-24 md:w-48 opacity-80 pointer-events-none hidden lg:block">
-        <svg viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M40 30C20 40 10 70 30 110C40 130 80 140 110 120C130 100 140 60 120 30C100 10 60 20 40 30Z" fill="#7d182e" stroke="white" strokeWidth="3" />
-          <circle cx="50" cy="60" r="6" fill="white" opacity="0.4" />
-          <circle cx="80" cy="40" r="4" fill="white" opacity="0.4" />
-          <circle cx="110" cy="70" r="8" fill="white" opacity="0.4" />
-          <circle cx="70" cy="100" r="5" fill="white" opacity="0.4" />
-          <circle cx="100" cy="110" r="7" fill="white" opacity="0.4" />
-        </svg>
-      </div>
-
       <div className="max-w-[1240px] mx-auto relative z-10">
         <div className="text-center mb-16 md:mb-24">
           <h2 className="text-white text-5xl md:text-7xl font-bold tracking-tight mb-6">
             <span className="font-serif italic font-normal">Simple</span> pricing
           </h2>
           <p className="text-gray-400 text-lg md:text-xl font-medium">
-            Subscribe and save thousands on graphic design services.
+            Start your 7-day free trial on any plan today.
           </p>
         </div>
 
@@ -212,7 +185,7 @@ const Pricing: React.FC = () => {
               transition={{ delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <PricingCard plan={plan} />
+              <PricingCard plan={plan} onTrigger={openQuiz} />
             </motion.div>
           ))}
         </div>

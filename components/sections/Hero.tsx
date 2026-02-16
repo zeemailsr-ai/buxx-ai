@@ -2,8 +2,9 @@ import React, { useMemo } from 'react';
 import Button from '../ui/Button';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Play, Sparkles, Zap, Palette, Layers, MousePointer2 } from 'lucide-react';
+import { useTheme } from '../../App';
 
-// Large pool of high-quality portfolio assets to ensure no visible repetition
+// Large pool of high-quality portfolio assets
 const ASSET_POOL = [
   "11cFmW_mmHeDKaX2HkUhA_Lnqx03DXwtp", "1rrF4WBQ-CXRAZnE91mEtWrj0RJ_8vuHz", "1WTaGDpOLPWdVYSJ0WqrLuH5-bLG1roWx", 
   "15Mf1_WZaWdM_fBNjpKgWhidiML45w7BG", "10-Vkxm3MuBR8WYJx4fEEdoEU_kpR-8Go", "1TUJ3x8KxMBHXJpIbTPGjpVIEjB8gBNlg",
@@ -42,7 +43,7 @@ const ScrollingColumn = ({ items, duration, className = "" }: { items: string[],
 );
 
 const Hero: React.FC = () => {
-  // Memoize randomized column sets to prevent visible duplicates in the same frame
+  const { openQuiz } = useTheme();
   const { col1, col2, col3 } = useMemo(() => {
     const shuffled = [...ASSET_POOL].sort(() => Math.random() - 0.5);
     return {
@@ -54,17 +55,11 @@ const Hero: React.FC = () => {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-navy-900 text-white pt-44 md:pt-56 pb-24">
-      
-      {/* Background Ambience */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand/10 blur-[150px] rounded-full pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-brand-glow/5 blur-[200px] rounded-full pointer-events-none"></div>
 
       <div className="relative z-20 w-full max-w-[1600px] mx-auto px-8 md:px-16 grid lg:grid-cols-2 gap-20 items-center">
-        
-        {/* Left Side: Bold Messaging */}
         <div className="text-left relative">
-          
-          {/* Top Doodle: Curved Arrow */}
           <div className="absolute -top-16 -left-12 hidden xl:block opacity-30 text-brand-glow">
             <svg width="120" height="60" viewBox="0 0 120 60" fill="none">
               <path d="M5 55C25 45 45 10 115 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeDasharray="4 6"/>
@@ -106,12 +101,12 @@ const Hero: React.FC = () => {
             transition={{ delay: 0.4 }}
             className="flex flex-col sm:flex-row items-center gap-8 mb-24"
           >
-            <Button 
-              href="/pricing" 
-              className="w-full sm:w-auto text-[15px] px-14 py-7 shadow-[0_25px_60px_-10px_rgba(125,24,46,0.5)] hover:scale-105 transition-all hover:bg-brand-light"
+            <button 
+              onClick={openQuiz}
+              className="w-full sm:w-auto text-[15px] px-14 py-7 bg-brand text-white font-black uppercase tracking-widest rounded-full shadow-[0_25px_60px_-10px_rgba(125,24,46,0.5)] hover:scale-105 transition-all hover:bg-brand-light"
             >
               Start 7-Day Trial
-            </Button>
+            </button>
             
             <Button 
               href="/portfolio" 
@@ -125,7 +120,6 @@ const Hero: React.FC = () => {
             </Button>
           </motion.div>
 
-          {/* Social Proof Badges with Professional Doodles */}
           <motion.div 
              initial={{ opacity: 0 }}
              animate={{ opacity: 1 }}
@@ -144,8 +138,6 @@ const Hero: React.FC = () => {
                 <div className="bg-brand/10 p-2 rounded-lg text-brand-glow"><Layers size={20} /></div>
                 <span>Cancel Anytime</span>
              </div>
-
-             {/* Bottom Doodle: Handdrawn circle around text */}
              <div className="absolute -bottom-16 right-0 opacity-20 pointer-events-none">
                 <svg width="150" height="60" viewBox="0 0 150 60">
                    <path d="M10,30 C30,5 120,5 140,30 C130,55 20,55 10,30" stroke="white" strokeWidth="2" fill="none" strokeDasharray="3 5"/>
@@ -154,30 +146,13 @@ const Hero: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Right Side: Flowing Creative Waterfall (Top to Down) */}
+        {/* Right Side Waterfall */}
         <div className="hidden lg:flex relative h-[1000px] gap-8 perspective-2000 -translate-y-24 rotate-[2deg] scale-110">
-          
-          <ScrollingColumn 
-            items={col1} 
-            duration={45} 
-            className="w-1/3" 
-          />
-          <ScrollingColumn 
-            items={col2} 
-            duration={35} 
-            className="w-1/3 mt-24" 
-          />
-          <ScrollingColumn 
-            items={col3} 
-            duration={55} 
-            className="w-1/3 mt-12" 
-          />
-
-          {/* Gradient Masks for Seamless Waterfall Effect */}
+          <ScrollingColumn items={col1} duration={45} className="w-1/3" />
+          <ScrollingColumn items={col2} duration={35} className="w-1/3 mt-24" />
+          <ScrollingColumn items={col3} duration={55} className="w-1/3 mt-12" />
           <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-navy-900 via-navy-900/40 to-transparent z-10"></div>
           <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-navy-900 via-navy-900/40 to-transparent z-10"></div>
-          
-          {/* Floating UI Callouts with Doodles */}
           <motion.div 
             animate={{ y: [0, -15, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
@@ -189,7 +164,6 @@ const Hero: React.FC = () => {
               <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">Verified Expert</p>
             </div>
           </motion.div>
-
           <motion.div 
             animate={{ y: [0, 15, 0] }}
             transition={{ duration: 7, repeat: Infinity, delay: 1, ease: "easeInOut" }}
@@ -201,19 +175,7 @@ const Hero: React.FC = () => {
               <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">Daily Delivery</p>
             </div>
           </motion.div>
-          
-          {/* Professional Doodle: Geometric Shape */}
-          <div className="absolute -bottom-20 -left-20 w-48 h-48 border border-white/5 rounded-full animate-[spin_30s_linear_infinite] pointer-events-none">
-             <div className="absolute top-0 left-1/2 w-2 h-2 bg-brand-glow rounded-full"></div>
-          </div>
         </div>
-
-      </div>
-
-      {/* Side Decorative Accent */}
-      <div className="absolute bottom-20 left-12 hidden xl:flex items-center gap-6 opacity-20 hover:opacity-100 transition-opacity">
-        <div className="h-0.5 w-24 bg-white"></div>
-        <span className="text-[10px] font-black uppercase tracking-[0.5em] vertical-text">Scroll to explore</span>
       </div>
     </section>
   );

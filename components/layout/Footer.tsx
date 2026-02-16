@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../ui/Logo';
+import { useTheme } from '../../App';
 
 const Footer: React.FC = () => {
+  const { openQuiz } = useTheme();
+  
   const navLinks = [
     { name: 'Services', href: '/services' },
     { name: 'Portfolio', href: '/portfolio' },
@@ -24,9 +27,17 @@ const Footer: React.FC = () => {
               Execution-focused, founder-led, and reliable.
               We scale brands through precision creative.
             </p>
-            <div className="flex items-center gap-8">
-               <a href="https://upwork.com/agencies/buxxai" target="_blank" rel="noopener noreferrer" className="text-[13px] font-black uppercase tracking-[0.4em] border-2 border-white/20 px-10 py-4 rounded-full hover:bg-white hover:text-brand transition-all">Upwork</a>
-               <a href="https://fiverr.com/buxxai" target="_blank" rel="noopener noreferrer" className="text-[13px] font-black uppercase tracking-[0.4em] border-2 border-white/20 px-10 py-4 rounded-full hover:bg-white hover:text-brand transition-all">Fiverr</a>
+            <div className="flex flex-wrap items-center gap-8">
+               <button 
+                onClick={openQuiz}
+                className="bg-white text-brand px-10 py-4 rounded-full font-black uppercase text-sm tracking-widest shadow-xl hover:scale-105 transition-all"
+               >
+                 7-Day Free Trial
+               </button>
+               <div className="flex items-center gap-6">
+                 <a href="https://upwork.com/agencies/buxxai" target="_blank" rel="noopener noreferrer" className="text-[13px] font-black uppercase tracking-[0.4em] border-2 border-white/20 px-10 py-4 rounded-full hover:bg-white hover:text-brand transition-all">Upwork</a>
+                 <a href="https://fiverr.com/buxxai" target="_blank" rel="noopener noreferrer" className="text-[13px] font-black uppercase tracking-[0.4em] border-2 border-white/20 px-10 py-4 rounded-full hover:bg-white hover:text-brand transition-all">Fiverr</a>
+               </div>
             </div>
           </div>
           
@@ -42,6 +53,12 @@ const Footer: React.FC = () => {
                   {link.name}
                 </Link>
               ))}
+              <button 
+                onClick={openQuiz}
+                className="text-left text-brand-glow hover:text-white transition-colors text-xl font-black uppercase tracking-widest underline decoration-2 underline-offset-8"
+              >
+                7-Day Free Trial
+              </button>
             </div>
           </div>
 
