@@ -1,68 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>buXXai | Partner Application</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
-        body { background-color: #0f172a; color: #ffffff; font-family: sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
-        .glow { position: fixed; width: 800px; height: 800px; background: radial-gradient(circle, rgba(125, 24, 46, 0.3) 0%, rgba(15, 23, 42, 0) 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: -1; pointer-events: none; }
-        h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(to bottom, #ffffff, #aaaaaa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; }
-        p.subtitle { font-size: 1.2rem; color: #94a3b8; font-weight: 300; margin-bottom: 3rem; text-align: center; }
-        .form-container { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 40px; width: 100%; max-width: 600px; backdrop-filter: blur(10px); }
-        label { display: block; margin-bottom: 8px; font-size: 0.9rem; color: #cbd5e1; font-weight: bold; margin-top: 20px; }
-        input, select, textarea { width: 100%; padding: 12px 16px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; color: #fff; font-size: 1rem; }
-        button { width: 100%; margin-top: 40px; padding: 16px; background: #7d182e; color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; text-transform: uppercase; }
-        button:hover { background: #9f1e3a; }
-        .radio-group { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
-        .radio-option { display: flex; align-items: center; background: rgba(255, 255, 255, 0.05); padding: 10px 15px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .radio-option input { width: auto; margin-right: 12px; }
-        .trap-section { border: 1px solid #7d182e; background: rgba(125, 24, 46, 0.1); padding: 20px; border-radius: 8px; margin-top: 30px; }
-    </style>
-</head>
-<body>
-    <div class="glow"></div>
-    <h1>buXXai</h1>
-    <p class="subtitle">Partner Application</p>
-    <div class="form-container">
-        <form name="buxxai-leads" method="POST" data-netlify="true">
-            <input type="hidden" name="form-name" value="buxxai-leads" />
-            
-            <label>Full Name</label>
-            <input type="text" name="name" required>
-
-            <label>Business Email</label>
-            <input type="email" name="email" required>
-            
-            <label>Company / Brand Name</label>
-            <input type="text" name="company" required>
-
-            <label>Which partnership tier?</label>
-            <div class="radio-group">
-                <label class="radio-option"><input type="radio" name="plan" value="Design Only" required> Design Subscription</label>
-                <label class="radio-option"><input type="radio" name="plan" value="Email Growth"> Email Marketing Engine</label>
-                <label class="radio-option"><input type="radio" name="plan" value="Ultra Bundle"> The Ultra Bundle</label>
-            </div>
-
-            <label>What do you need executed?</label>
-            <textarea name="details" rows="4" required></textarea>
-            
-            <label>Async Workflow Agreement:</label>
-            <div class="radio-group">
-                 <label class="radio-option"><input type="radio" name="async" value="Yes" required> Yes, I prefer speed over meetings.</label>
-            </div>
-
-            <div class="trap-section">
-                <label style="margin-top:0; color:#ff99aa;">FINAL STEP: Proceed how?</label>
-                <div class="radio-group">
-                    <label class="radio-option"><input type="radio" name="next_step" value="Fast Track" required> 🚀 Fast Track (Invoice)</label>
-                    <label class="radio-option"><input type="radio" name="next_step" value="Strategy Call"> 📞 Strategy Call (15-min)</label>
-                </div>
-            </div>
-
-            <button type="submit">Submit Application</button>
-        </form>
-    </div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>buXXai | Agency</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
