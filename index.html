@@ -2,13 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>buXXai | Agency</title>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      body {
+        background-color: #0f172a; /* Dark Blue/Black */
+        color: #ffffff;            /* White Text */
+        font-family: sans-serif;
+        margin: 0;
+      }
+      /* Fix images being too big if styling fails */
+      img { max-width: 100%; height: auto; }
+    </style>
   </head>
-  <body>
+  
+  <body class="bg-slate-900 text-white">
     <div id="root"></div>
     
     <script type="module" src="/index.tsx"></script>
