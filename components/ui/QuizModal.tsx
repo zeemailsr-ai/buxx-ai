@@ -65,11 +65,11 @@ const QuizModal: React.FC<QuizModalProps> = ({ isOpen, onClose }) => {
       .join("&");
   }
 
-  const handleNext = () => {
+  const handleNext = (updatedData?: Record<string, string>) => {
     if (currentStep < questions.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      submitForm();
+      submitForm(updatedData);
     }
   };
 
@@ -80,22 +80,23 @@ const QuizModal: React.FC<QuizModalProps> = ({ isOpen, onClose }) => {
   };
 
   const handleChoice = (val: string) => {
-    setFormData({ ...formData, [questions[currentStep].key]: val });
-    setTimeout(() => handleNext(), 300);
+    const newData = { ...formData, [questions[currentStep].key]: val };
+    setFormData(newData);
+    setTimeout(() => handleNext(newData), 300);
   };
 
-  const submitForm = () => {
-    console.log('Form Submitted:', formData);
+  const submitForm = (finalData?: Record<string, string>) => {
+    const dataToSubmit = finalData || formData;
+    console.log('Form Submitted:', dataToSubmit);
     
-    // Netlify submission
     fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encode({ "form-name": "buxxai-leads", ...formData })
+      body: encode({ "form-name": "buxxai-leads", ...dataToSubmit })
     })
     .then(() => {
       setIsSubmitted(true);
-      if (formData['next-steps']?.includes('Strategy Call')) {
+      if (dataToSubmit['next-steps']?.includes('Strategy Call')) {
           setTimeout(() => {
               window.location.href = "https://calendly.com/zeemailsr/buxxai-demo-call";
           }, 2000);
@@ -125,19 +126,19 @@ const QuizModal: React.FC<QuizModalProps> = ({ isOpen, onClose }) => {
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-2xl bg-white rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col min-h-[500px]"
+            className="relative w-full max-w-2xl bg-white dark:bg-navy-900 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col min-h-[500px] max-h-[90vh]"
           >
             {/* Header */}
-            <div className="px-8 pt-8 pb-4 flex justify-between items-center border-b border-gray-50">
+            <div className="px-8 pt-8 pb-4 flex justify-between items-center border-b border-gray-50 dark:border-navy-800">
               <Logo className="h-8" />
-              <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+              <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-navy-800 rounded-full transition-colors">
                 <X size={24} className="text-gray-400" />
               </button>
             </div>
 
             {/* Progress Bar */}
             {!isSubmitted && (
-              <div className="w-full h-1 bg-gray-100">
+              <div className="w-full h-1 bg-gray-100 dark:bg-navy-800">
                 <motion.div 
                   className="h-full bg-brand" 
                   initial={{ width: 0 }}
@@ -146,7 +147,7 @@ const QuizModal: React.FC<QuizModalProps> = ({ isOpen, onClose }) => {
               </div>
             )}
 
-            <div className="flex-grow flex flex-col p-8 md:p-12 overflow-y-auto">
+            <div className="flex-grow flex flex-col p-8 md:p-12 overflow-y-auto custom-scrollbar">
               {!isSubmitted ? (
                 <form 
                   name="buxxai-leads" 
@@ -154,12 +155,11 @@ const QuizModal: React.FC<QuizModalProps> = ({ isOpen, onClose }) => {
                   onSubmit={(e) => e.preventDefault()}
                   className="flex flex-col h-full"
                 >
-                  {/* Honeypot/Netlify hidden inputs */}
                   <input type="hidden" name="form-name" value="buxxai-leads" />
                   
                   <div className="mb-10">
-                    <span className="text-brand font-black text-xs uppercase tracking-[0.2em] mb-3 block">Question {currentStep + 1} of {questions.length}</span>
-                    <h2 className="text-2xl md:text-3xl font-black text-gray-900 leading-tight">
+                    <span className="text-brand dark:text-brand-glow font-black text-xs uppercase tracking-[0.2em] mb-3 block">Question {currentStep + 1} of {questions.length}</span>
+                    <h2 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-white leading-tight">
                       {questions[currentStep].label}
                     </h2>
                   </div>
@@ -174,7 +174,7 @@ const QuizModal: React.FC<QuizModalProps> = ({ isOpen, onClose }) => {
                         onChange={(e) => setFormData({ ...formData, [questions[currentStep].key]: e.target.value })}
                         onKeyDown={(e) => e.key === 'Enter' && handleNext()}
                         placeholder={questions[currentStep].placeholder}
-                        className="w-full text-xl md:text-2xl font-bold border-b-2 border-gray-200 focus:border-brand outline-none pb-4 transition-colors placeholder:text-gray-200 text-gray-900"
+                        className="w-full text-xl md:text-2xl font-bold border-b-2 border-gray-200 dark:border-navy-700 focus:border-brand outline-none pb-4 transition-colors placeholder:text-gray-200 dark:placeholder:text-navy-700 text-gray-900 dark:text-white bg-transparent"
                         required
                       />
                     )}
@@ -187,7 +187,7 @@ const QuizModal: React.FC<QuizModalProps> = ({ isOpen, onClose }) => {
                         value={formData[questions[currentStep].key] || ''}
                         onChange={(e) => setFormData({ ...formData, [questions[currentStep].key]: e.target.value })}
                         placeholder={questions[currentStep].placeholder}
-                        className="w-full text-lg md:text-xl font-medium border-2 border-gray-100 p-6 rounded-2xl focus:border-brand outline-none transition-colors placeholder:text-gray-200 text-gray-900 resize-none"
+                        className="w-full text-lg md:text-xl font-medium border-2 border-gray-100 dark:border-navy-800 p-6 rounded-2xl focus:border-brand outline-none transition-colors placeholder:text-gray-200 dark:placeholder:text-navy-700 text-gray-900 dark:text-white bg-transparent resize-none"
                         required
                       />
                     )}
@@ -206,13 +206,13 @@ const QuizModal: React.FC<QuizModalProps> = ({ isOpen, onClose }) => {
                             onClick={() => handleChoice(opt)}
                             className={`w-full text-left p-5 rounded-2xl border-2 transition-all font-bold text-lg flex items-center justify-between group
                               ${formData[questions[currentStep].key] === opt 
-                                ? 'border-brand bg-brand/5 text-brand' 
-                                : 'border-gray-100 hover:border-brand/40 text-gray-600 hover:bg-gray-50'
+                                ? 'border-brand bg-brand/5 dark:bg-brand/10 text-brand dark:text-brand-glow' 
+                                : 'border-gray-100 dark:border-navy-800 hover:border-brand/40 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-navy-800'
                               }`}
                           >
-                            {opt}
-                            <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors
-                              ${formData[questions[currentStep].key] === opt ? 'border-brand bg-brand text-white' : 'border-gray-200'}
+                            <span className="max-w-[85%]">{opt}</span>
+                            <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors shrink-0
+                              ${formData[questions[currentStep].key] === opt ? 'border-brand bg-brand text-white' : 'border-gray-200 dark:border-navy-700'}
                             `}>
                               {formData[questions[currentStep].key] === opt && <CheckCircle2 size={14} />}
                             </div>
@@ -227,7 +227,7 @@ const QuizModal: React.FC<QuizModalProps> = ({ isOpen, onClose }) => {
                       type="button"
                       onClick={handlePrev}
                       disabled={currentStep === 0}
-                      className={`flex items-center gap-2 font-black uppercase text-xs tracking-widest transition-opacity ${currentStep === 0 ? 'opacity-0' : 'opacity-40 hover:opacity-100'}`}
+                      className={`flex items-center gap-2 font-black uppercase text-xs tracking-widest transition-opacity ${currentStep === 0 ? 'opacity-0' : 'opacity-40 hover:opacity-100 dark:text-white'}`}
                     >
                       <ChevronLeft size={18} /> Back
                     </button>
@@ -235,7 +235,7 @@ const QuizModal: React.FC<QuizModalProps> = ({ isOpen, onClose }) => {
                     {questions[currentStep].type !== 'choice' && (
                       <button
                         type="button"
-                        onClick={handleNext}
+                        onClick={() => handleNext()}
                         className="bg-brand text-white px-10 py-4 rounded-full font-black uppercase text-sm tracking-widest flex items-center gap-3 hover:bg-brand-dark transition-all shadow-lg shadow-brand/20 active:scale-95"
                       >
                         {currentStep === questions.length - 1 ? 'Submit' : 'Next'} <ChevronRight size={18} />
@@ -249,17 +249,17 @@ const QuizModal: React.FC<QuizModalProps> = ({ isOpen, onClose }) => {
                   animate={{ opacity: 1, y: 0 }}
                   className="flex flex-col items-center justify-center text-center py-10"
                 >
-                  <div className="w-24 h-24 bg-brand/10 rounded-full flex items-center justify-center text-brand mb-8 animate-bounce">
+                  <div className="w-24 h-24 bg-brand/10 dark:bg-brand/20 rounded-full flex items-center justify-center text-brand dark:text-brand-glow mb-8 animate-bounce">
                     <Sparkles size={48} />
                   </div>
-                  <h2 className="text-4xl font-black text-gray-900 mb-4 uppercase tracking-tighter">Application Received!</h2>
-                  <p className="text-xl text-gray-500 max-w-sm mb-10 leading-relaxed">
+                  <h2 className="text-4xl font-black text-gray-900 dark:text-white mb-4 uppercase tracking-tighter">Application Received!</h2>
+                  <p className="text-xl text-gray-500 dark:text-gray-400 max-w-sm mb-10 leading-relaxed">
                     We help ambitious brands scale. Our team is reviewing your details right now.
                   </p>
                   
                   {formData['next-steps']?.includes('Strategy Call') ? (
                     <div className="flex flex-col items-center gap-4">
-                       <div className="flex items-center gap-3 text-brand font-black uppercase tracking-widest bg-brand/5 px-6 py-3 rounded-full">
+                       <div className="flex items-center gap-3 text-brand dark:text-brand-glow font-black uppercase tracking-widest bg-brand/5 dark:bg-brand/10 px-6 py-3 rounded-full">
                           <PhoneCall size={18} /> Redirecting to Calendar...
                        </div>
                     </div>
@@ -278,7 +278,7 @@ const QuizModal: React.FC<QuizModalProps> = ({ isOpen, onClose }) => {
             {/* Footer Form Info */}
             {!isSubmitted && (
                <div className="px-12 pb-8 text-center">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-gray-300">buXXai Partner Application • We help ambitious brands scale.</p>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-gray-300 dark:text-navy-700">buXXai Partner Application • We help ambitious brands scale.</p>
                </div>
             )}
           </motion.div>
