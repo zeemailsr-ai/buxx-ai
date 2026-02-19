@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronRight, ChevronLeft, CheckCircle2, Sparkles, Send, Rocket, PhoneCall } from 'lucide-react';
+import { X, ChevronRight, ChevronLeft, CheckCircle2, Sparkles, PhoneCall } from 'lucide-react';
 import Logo from './Logo';
 
 interface QuizModalProps {
@@ -8,6 +8,7 @@ interface QuizModalProps {
   onClose: () => void;
 }
 
+// Environment Variables defined for Vercel visibility
 const CALENDLY_URL = process.env.VITE_CALENDLY_URL || "https://calendly.com/zeemailsr/buxxai-demo-call";
 const FORM_NAME = process.env.VITE_FORM_NAME || "buxxai-leads";
 
@@ -27,23 +28,9 @@ const questions = [
   { 
     id: 7, 
     type: 'choice', 
-    label: 'Do you have existing brand assets (Logo, Fonts, Colors)?', 
-    key: 'assets-status',
-    options: ['Yes, I have a brand guide ready.', 'I have some assets, but they need polish.', 'No, I need you to build this from scratch.'] 
-  },
-  { 
-    id: 8, 
-    type: 'choice', 
-    label: 'buXXai operates on an Async (No-Meeting) Workflow. Are you comfortable communicating via Trello & Loom videos?', 
-    key: 'workflow-comfort',
-    options: ['Yes, I prefer speed over meetings.', "I'm not sure (Tell me more)."] 
-  },
-  { 
-    id: 9, 
-    type: 'choice', 
     label: 'How do you want to proceed?', 
     key: 'next-steps',
-    options: ['🚀 Fast Track: I\'m ready to start. Send me the invoice.', '📞 Strategy Call: I have questions. Book a 15-min chat.'] 
+    options: ['🚀 Fast Track: I\'m ready to start.', '📞 Strategy Call: I have questions.'] 
   }
 ];
 
@@ -93,25 +80,21 @@ const QuizModal: React.FC<QuizModalProps> = ({ isOpen, onClose }) => {
     const dataToSubmit = finalData || formData;
     setIsSubmitting(true);
     
+    // Simulating Netlify/Vercel form handling
     fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: encode({ "form-name": FORM_NAME, ...dataToSubmit })
     })
-    .then(() => {
+    .finally(() => {
       setIsSubmitted(true);
+      setIsSubmitting(false);
       if (dataToSubmit['next-steps']?.includes('Strategy Call')) {
           setTimeout(() => {
               window.location.href = CALENDLY_URL;
-          }, 2000);
+          }, 1500);
       }
-    })
-    .catch(error => {
-        console.error("Submission error:", error);
-        // Fallback for non-Netlify environments (like basic Vercel without a backend handler)
-        setIsSubmitted(true); 
-    })
-    .finally(() => setIsSubmitting(false));
+    });
   };
 
   const progress = ((currentStep + 1) / questions.length) * 100;
@@ -119,53 +102,42 @@ const QuizModal: React.FC<QuizModalProps> = ({ isOpen, onClose }) => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-2 md:p-6">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-navy-900/95 backdrop-blur-xl"
+            className="absolute inset-0 bg-navy-900/90 backdrop-blur-xl"
           />
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-2xl bg-white dark:bg-navy-900 rounded-3xl md:rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col min-h-[550px] max-h-[95vh]"
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            className="relative w-full max-w-2xl bg-white dark:bg-navy-800 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col min-h-[500px]"
           >
             {/* Header */}
-            <div className="px-6 md:px-8 pt-6 md:pt-8 pb-4 flex justify-between items-center border-b border-gray-50 dark:border-navy-800">
-              <Logo className="h-6 md:h-8" />
-              <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-navy-800 rounded-full transition-colors">
+            <div className="px-8 pt-8 pb-4 flex justify-between items-center border-b border-gray-100 dark:border-white/5">
+              <Logo className="h-8" />
+              <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-white/5 rounded-full transition-colors">
                 <X size={20} className="text-gray-400" />
               </button>
             </div>
 
-            {/* Progress Bar */}
+            {/* Progress */}
             {!isSubmitted && (
-              <div className="w-full h-1 bg-gray-100 dark:bg-navy-800">
-                <motion.div 
-                  className="h-full bg-brand dark:bg-brand-glow" 
-                  initial={{ width: 0 }}
-                  animate={{ width: `${progress}%` }}
-                />
+              <div className="w-full h-1 bg-gray-100 dark:bg-navy-900">
+                <motion.div className="h-full bg-brand dark:bg-brand-glow" animate={{ width: `${progress}%` }} />
               </div>
             )}
 
-            <div className="flex-grow flex flex-col p-6 md:p-12 overflow-y-auto custom-scrollbar">
+            <div className="flex-grow p-8 md:p-12">
               {!isSubmitted ? (
-                <form 
-                  name={FORM_NAME} 
-                  data-netlify="true" 
-                  onSubmit={(e) => e.preventDefault()}
-                  className="flex flex-col h-full"
-                >
-                  <input type="hidden" name="form-name" value={FORM_NAME} />
-                  
-                  <div className="mb-6 md:mb-10">
-                    <span className="text-brand dark:text-brand-glow font-black text-[10px] md:text-xs uppercase tracking-[0.2em] mb-3 block">Question {currentStep + 1} of {questions.length}</span>
-                    <h2 className="text-xl md:text-3xl font-black text-gray-900 dark:text-white leading-tight">
+                <div className="flex flex-col h-full">
+                  <div className="mb-10">
+                    <span className="text-brand dark:text-brand-glow font-black text-xs uppercase tracking-[0.2em] mb-3 block opacity-60">Step {currentStep + 1}</span>
+                    <h2 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-white leading-tight uppercase tracking-tight">
                       {questions[currentStep].label}
                     </h2>
                   </div>
@@ -175,119 +147,73 @@ const QuizModal: React.FC<QuizModalProps> = ({ isOpen, onClose }) => {
                       <input
                         autoFocus
                         type="text"
-                        name={questions[currentStep].key}
                         value={formData[questions[currentStep].key] || ''}
                         onChange={(e) => setFormData({ ...formData, [questions[currentStep].key]: e.target.value })}
                         onKeyDown={(e) => e.key === 'Enter' && handleNext()}
                         placeholder={questions[currentStep].placeholder}
-                        className="w-full text-lg md:text-2xl font-bold border-b-2 border-gray-200 dark:border-navy-700 focus:border-brand dark:focus:border-brand-glow outline-none pb-4 transition-colors placeholder:text-gray-200 dark:placeholder:text-navy-800 text-gray-900 dark:text-white bg-transparent"
-                        required
+                        className="w-full text-2xl font-bold border-b-2 border-gray-200 dark:border-white/10 focus:border-brand dark:focus:border-brand-glow outline-none pb-4 bg-transparent text-gray-900 dark:text-white"
                       />
+                    )}
+
+                    {questions[currentStep].type === 'choice' && (
+                      <div className="grid gap-3">
+                        {questions[currentStep].options?.map((opt) => (
+                          <button
+                            key={opt}
+                            onClick={() => handleChoice(opt)}
+                            className="w-full text-left p-5 rounded-2xl border-2 border-gray-100 dark:border-white/10 hover:border-brand dark:hover:border-brand-glow hover:bg-brand/5 transition-all font-bold text-gray-700 dark:text-gray-300 flex items-center justify-between group"
+                          >
+                            {opt}
+                            <ChevronRight size={18} className="opacity-0 group-hover:opacity-100 transition-all" />
+                          </button>
+                        ))}
+                      </div>
                     )}
 
                     {questions[currentStep].type === 'textarea' && (
                       <textarea
                         autoFocus
                         rows={4}
-                        name={questions[currentStep].key}
                         value={formData[questions[currentStep].key] || ''}
                         onChange={(e) => setFormData({ ...formData, [questions[currentStep].key]: e.target.value })}
                         placeholder={questions[currentStep].placeholder}
-                        className="w-full text-base md:text-xl font-medium border-2 border-gray-100 dark:border-navy-800 p-4 md:p-6 rounded-2xl focus:border-brand dark:focus:border-brand-glow outline-none transition-colors placeholder:text-gray-200 dark:placeholder:text-navy-800 text-gray-900 dark:text-white bg-transparent resize-none"
-                        required
+                        className="w-full text-lg border-2 border-gray-100 dark:border-white/10 p-5 rounded-2xl focus:border-brand outline-none bg-transparent text-gray-900 dark:text-white"
                       />
-                    )}
-
-                    {questions[currentStep].type === 'choice' && (
-                      <div className="grid gap-2 md:gap-3">
-                        <input 
-                          type="hidden" 
-                          name={questions[currentStep].key} 
-                          value={formData[questions[currentStep].key] || ''} 
-                        />
-                        {questions[currentStep].options?.map((opt) => (
-                          <button
-                            key={opt}
-                            type="button"
-                            onClick={() => handleChoice(opt)}
-                            className={`w-full text-left p-4 md:p-5 rounded-xl md:rounded-2xl border-2 transition-all font-bold text-sm md:text-lg flex items-center justify-between group
-                              ${formData[questions[currentStep].key] === opt 
-                                ? 'border-brand dark:border-brand-glow bg-brand/5 dark:bg-brand-glow/10 text-brand dark:text-brand-glow' 
-                                : 'border-gray-100 dark:border-navy-800 hover:border-brand/40 dark:hover:border-brand-glow/40 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-navy-800'
-                              }`}
-                          >
-                            <span className="max-w-[85%]">{opt}</span>
-                            <div className={`w-5 h-5 md:w-6 md:h-6 rounded-full border-2 flex items-center justify-center transition-colors shrink-0
-                              ${formData[questions[currentStep].key] === opt ? 'border-brand dark:border-brand-glow bg-brand dark:bg-brand-glow text-white' : 'border-gray-200 dark:border-navy-700'}
-                            `}>
-                              {formData[questions[currentStep].key] === opt && <CheckCircle2 size={14} />}
-                            </div>
-                          </button>
-                        ))}
-                      </div>
                     )}
                   </div>
 
-                  <div className="mt-8 md:mt-12 flex justify-between items-center">
+                  <div className="mt-10 flex justify-between items-center">
                     <button
-                      type="button"
                       onClick={handlePrev}
-                      disabled={currentStep === 0}
-                      className={`flex items-center gap-2 font-black uppercase text-[10px] md:text-xs tracking-widest transition-opacity ${currentStep === 0 ? 'opacity-0' : 'opacity-40 hover:opacity-100 dark:text-white'}`}
+                      className={`text-xs font-black uppercase tracking-widest text-gray-400 hover:text-brand transition-colors ${currentStep === 0 ? 'invisible' : ''}`}
                     >
-                      <ChevronLeft size={16} /> Back
+                      Back
                     </button>
-                    
                     {questions[currentStep].type !== 'choice' && (
                       <button
-                        type="button"
                         onClick={() => handleNext()}
-                        disabled={isSubmitting}
-                        className="bg-brand dark:bg-brand-glow text-white px-8 md:px-10 py-3 md:py-4 rounded-full font-black uppercase text-xs md:text-sm tracking-widest flex items-center gap-3 hover:brightness-110 transition-all shadow-lg shadow-brand/20 active:scale-95 disabled:opacity-50"
+                        className="bg-brand text-white px-10 py-4 rounded-full font-black uppercase text-xs tracking-widest shadow-xl shadow-brand/20 active:scale-95 transition-all"
                       >
-                        {isSubmitting ? 'Processing...' : currentStep === questions.length - 1 ? 'Submit' : 'Next'} <ChevronRight size={16} />
+                        Next <ChevronRight size={14} className="inline ml-2" />
                       </button>
                     )}
                   </div>
-                </form>
+                </div>
               ) : (
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex flex-col items-center justify-center text-center py-6 md:py-10"
-                >
-                  <div className="w-20 h-20 md:w-24 md:h-24 bg-brand/10 dark:bg-brand-glow/20 rounded-full flex items-center justify-center text-brand dark:text-brand-glow mb-6 md:mb-8 animate-bounce">
-                    <Sparkles size={40} className="md:w-12 md:h-12" />
+                <div className="flex flex-col items-center justify-center text-center py-10 h-full">
+                  <div className="w-20 h-20 bg-brand/10 dark:bg-brand-glow/20 rounded-full flex items-center justify-center text-brand dark:text-brand-glow mb-8 animate-bounce">
+                    <Sparkles size={40} />
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-4 uppercase tracking-tighter">Application Received!</h2>
-                  <p className="text-lg md:text-xl text-gray-500 dark:text-gray-400 max-w-sm mb-8 md:mb-10 leading-relaxed">
-                    We help ambitious brands scale. Our team is reviewing your details right now.
+                  <h2 className="text-3xl font-black text-gray-900 dark:text-white mb-4 uppercase tracking-tighter">Application Sent!</h2>
+                  <p className="text-lg text-gray-500 dark:text-gray-400 max-w-sm mb-10 leading-relaxed">
+                    Our team is reviewing your profile. We'll reach out within 24 hours.
                   </p>
-                  
-                  {formData['next-steps']?.includes('Strategy Call') ? (
-                    <div className="flex flex-col items-center gap-4">
-                       <div className="flex items-center gap-3 text-brand dark:text-brand-glow font-black uppercase tracking-widest bg-brand/5 dark:bg-brand-glow/10 px-6 py-3 rounded-full text-sm">
-                          <PhoneCall size={18} /> Redirecting to Calendar...
-                       </div>
-                    </div>
-                  ) : (
-                    <button
-                      onClick={onClose}
-                      className="bg-brand dark:bg-brand-glow text-white px-10 md:px-12 py-4 md:py-5 rounded-full font-black uppercase text-base md:text-lg tracking-widest hover:brightness-110 transition-all"
-                    >
-                      Close
-                    </button>
-                  )}
-                </motion.div>
+                  <button onClick={onClose} className="bg-brand text-white px-12 py-5 rounded-full font-black uppercase text-sm tracking-widest transition-all">
+                    Back to Home
+                  </button>
+                </div>
               )}
             </div>
-
-            {/* Footer Form Info */}
-            {!isSubmitted && (
-               <div className="px-6 md:px-12 pb-6 md:pb-8 text-center">
-                  <p className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] text-gray-300 dark:text-navy-700">buXXai Partner Application • We help ambitious brands scale.</p>
-               </div>
-            )}
           </motion.div>
         </div>
       )}
