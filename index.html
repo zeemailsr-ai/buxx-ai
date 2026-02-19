@@ -8,16 +8,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
       tailwind.config = {
-        darkMode: 'class', // This listens to the "class=dark" at the top
+        darkMode: 'class',
         theme: {
           extend: {
             colors: {
-              primary: '#800000', // MAROON
+              primary: '#800000', // Maroon
               secondary: '#1e293b',
               dark: '#0f172a',
             }
@@ -27,23 +26,37 @@
     </script>
 
     <style>
-      body, html {
+      /* FORCE DARK BACKGROUNDS EVERYWHERE */
+      html, body, #root {
         background-color: #0f172a !important; /* Dark Slate */
         color: #ffffff !important;            /* White Text */
+        min-height: 100vh;
       }
-      /* Force Header/Footer to match */
-      header, nav, footer, section {
-        background-color: #0f172a !important; 
+
+      /* ATTACK THE WHITE HEADER: Turn 'bg-white' classes to Dark */
+      .bg-white, .bg-gray-50, .bg-gray-100, header, nav {
+        background-color: #0f172a !important;
+        color: #ffffff !important;
         border-color: #334155 !important;
       }
-      /* Ensure Maroon Buttons are visible */
-      .bg-primary {
-        background-color: #800000 !important;
+
+      /* FIX DARK TEXT: Turn 'text-black' classes to White */
+      .text-black, .text-gray-900, .text-gray-800, .text-gray-700 {
+        color: #ffffff !important;
       }
+
+      /* FORCE MAROON BUTTONS */
+      .bg-primary, .text-primary, button {
+        background-color: #800000 !important; /* Your Maroon */
+        color: white !important;
+      }
+      
+      /* Fix Borders */
+      * { border-color: #1e293b !important; }
     </style>
   </head>
   
-  <body class="bg-slate-900 text-white antialiased">
+  <body class="bg-slate-900 text-white">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>
