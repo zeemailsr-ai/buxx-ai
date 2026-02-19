@@ -1,4 +1,3 @@
-
 import React, { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 
@@ -25,8 +24,8 @@ const Section: React.FC<SectionProps> = ({
   const getBackground = () => {
     switch(variant) {
       case 'white': return 'bg-white text-gray-900 dark:bg-navy-900 dark:text-gray-100';
-      case 'cream': return 'bg-cream-50 text-gray-900 dark:bg-navy-800 dark:text-gray-100';
-      case 'dark': return 'bg-charcoal text-white dark:bg-black';
+      case 'cream': return 'bg-cream-50 text-gray-900 dark:bg-navy-950 dark:text-gray-100';
+      case 'dark': return 'bg-charcoal text-white dark:bg-navy-950';
       case 'brand': return 'bg-brand text-white dark:bg-brand-dark';
       default: return 'bg-white text-gray-900 dark:bg-navy-900 dark:text-gray-100';
     }
@@ -55,7 +54,7 @@ const Section: React.FC<SectionProps> = ({
   return (
     <section 
       id={id} 
-      className={`relative py-24 md:py-32 overflow-hidden transition-colors duration-300 ${getBackground()} ${className}`}
+      className={`relative py-24 md:py-32 overflow-hidden transition-all duration-500 ${getBackground()} ${className}`}
     >
       {pattern !== 'none' && (
         <div className={`absolute inset-0 pointer-events-none ${getPattern()}`}></div>
