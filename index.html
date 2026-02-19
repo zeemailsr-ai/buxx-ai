@@ -7,22 +7,19 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
       tailwind.config = {
-        darkMode: 'class', // Enables Dark Mode
+        darkMode: 'class',
         theme: {
           extend: {
             colors: {
-              // This maps 'primary' to YOUR Maroon color
-              primary: '#800000', 
+              primary: '#800000', // MAROON
               secondary: '#1e293b',
               dark: '#0f172a',
-              // Standard AI Studio colors
               background: '#0f172a',
               surface: '#1e293b',
             },
@@ -35,12 +32,12 @@
     </script>
 
     <style>
-      body {
+      body, html {
         background-color: #0f172a !important;
         color: white !important;
         min-height: 100vh;
       }
-      /* Force header to be dark */
+      /* FORCE HEADER DARK */
       header, nav { background-color: #0f172a !important; border-bottom: 1px solid #334155; }
     </style>
   </head>
@@ -48,12 +45,6 @@
   <body class="bg-slate-900 text-white antialiased">
     <div id="root"></div>
     
-    <script>
-      window.onerror = function(msg, url, line) {
-        document.body.innerHTML += '<div style="color:red;background:black;padding:20px;">Error: ' + msg + '</div>';
-      }
-    </script>
-
     <script type="module" src="/index.tsx"></script>
   </body>
 </html>
