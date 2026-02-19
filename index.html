@@ -26,6 +26,7 @@
                 vivid: '#7d182e',   
                 glow: '#ff4d71', // High-visibility maroon for dark mode
               },
+              charcoal: '#0f0f0f', // Explicit charcoal for dark sections
               cream: {
                 50: '#FDFBF7',
                 100: '#F7F3EB',
@@ -49,20 +50,17 @@
     <style>
       html { scroll-behavior: smooth; }
       body {
+        margin: 0;
+        padding: 0;
         font-family: 'Inter', sans-serif;
         -webkit-font-smoothing: antialiased;
         transition: background-color 0.5s ease;
+        overflow-x: hidden;
       }
       .dark body { background-color: #020617; }
       .custom-scrollbar::-webkit-scrollbar { width: 4px; }
       .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
       .custom-scrollbar::-webkit-scrollbar-thumb { background: #7d182e; border-radius: 10px; }
-      
-      /* Resolving Header/Hero double gradient clashing */
-      .header-glass {
-        backdrop-filter: blur(12px) saturate(180%);
-        -webkit-backdrop-filter: blur(12px) saturate(180%);
-      }
     </style>
     <script type="importmap">
     {

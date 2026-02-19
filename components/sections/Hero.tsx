@@ -30,10 +30,10 @@ const ScrollingColumn = ({ items, duration, className = "" }: { items: string[],
       className="flex flex-col gap-8"
     >
       {[...items, ...items].map((src, i) => (
-        <div key={i} className="relative w-full rounded-[2.5rem] overflow-hidden shadow-2xl border border-gray-100 dark:border-white/10 bg-gray-50 dark:bg-charcoal group">
+        <div key={i} className="relative w-full rounded-[2rem] overflow-hidden shadow-xl border border-gray-100 dark:border-white/5 bg-white dark:bg-charcoal group">
           <img src={src} alt="" className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-             <span className="text-white text-xs font-black uppercase tracking-widest bg-brand px-3 py-1.5 rounded-full">Premium Creative</span>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+             <span className="text-white text-[10px] font-black uppercase tracking-widest bg-brand px-3 py-1.5 rounded-full">Premium Creative</span>
           </div>
         </div>
       ))}
@@ -53,17 +53,16 @@ const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative min-h-[90vh] md:min-h-screen flex items-center overflow-hidden bg-white dark:bg-navy-900 text-gray-900 dark:text-white pt-28 md:pt-48 pb-16 transition-colors duration-500">
-      {/* Dynamic Glows */}
-      <div className="absolute top-0 right-0 w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-brand/5 md:bg-brand/10 blur-[100px] md:blur-[150px] rounded-full pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-brand-glow/5 blur-[150px] md:blur-[200px] rounded-full pointer-events-none"></div>
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-white dark:bg-navy-900 text-gray-900 dark:text-white pt-32 md:pt-48 pb-16 transition-colors duration-500">
+      {/* Visual background elements - Removed rectangular glows */}
+      <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-brand/5 blur-[100px] rounded-full pointer-events-none"></div>
 
       <div className="relative z-20 w-full max-w-[1600px] mx-auto px-6 md:px-16 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         <div className="text-center lg:text-left relative">
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-brand/10 dark:bg-white/5 border border-brand/20 dark:border-white/10 backdrop-blur-xl shadow-sm mb-8"
+            className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-brand/5 dark:bg-white/5 border border-brand/20 dark:border-white/10 backdrop-blur-xl mb-8"
           >
              <Sparkles className="text-brand dark:text-brand-glow" size={16} />
              <span className="text-[10px] md:text-[11px] font-black text-brand dark:text-white tracking-[0.2em] md:tracking-[0.3em] uppercase">Built for ambitious founders</span>
@@ -72,7 +71,7 @@ const Hero: React.FC = () => {
           <motion.h1 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-display font-black text-5xl md:text-7xl xl:text-[6.5rem] leading-[0.9] tracking-tighter mb-8 md:mb-10 text-gray-900 dark:text-white uppercase"
+            className="font-display font-black text-5xl md:text-7xl xl:text-[6rem] leading-[0.95] tracking-tighter mb-8 md:mb-10 text-gray-900 dark:text-white uppercase"
           >
             Creative <br className="hidden md:block" />
             <span className="text-brand dark:text-brand-glow italic font-serif lowercase tracking-normal">that</span> scales <br className="hidden md:block" />
@@ -83,9 +82,9 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-lg md:text-2xl text-gray-600 dark:text-gray-400 max-w-xl mx-auto lg:mx-0 mb-10 md:mb-14 leading-relaxed font-sans font-medium"
+            className="text-lg md:text-2xl text-gray-600 dark:text-gray-400 max-w-xl mx-auto lg:mx-0 mb-10 md:mb-14 leading-relaxed font-sans"
           >
-            The execution-focused creative partner for founders. Get a dedicated squad of elite designers for a <span className="text-brand dark:text-white font-bold underline decoration-brand/40 dark:decoration-brand-glow/40 decoration-4 underline-offset-8">flat monthly fee.</span>
+            The execution-focused creative partner for founders. Get a dedicated squad of elite designers for a <span className="text-brand dark:text-white font-bold underline decoration-brand/30 decoration-4 underline-offset-8">flat monthly fee.</span>
           </motion.p>
 
           <motion.div 
@@ -96,7 +95,7 @@ const Hero: React.FC = () => {
           >
             <button 
               onClick={openQuiz}
-              className="w-full sm:w-auto text-[14px] md:text-[15px] px-10 md:px-14 py-5 md:py-7 bg-brand text-white font-black uppercase tracking-widest rounded-full shadow-xl shadow-brand/20 hover:scale-105 transition-all hover:bg-brand-light"
+              className="w-full sm:w-auto text-[14px] md:text-[15px] px-12 md:px-14 py-6 md:py-7 bg-brand text-white font-black uppercase tracking-widest rounded-full shadow-2xl shadow-brand/20 hover:scale-105 transition-all hover:bg-brand-light"
             >
               Start 7-Day Trial
             </button>
@@ -104,7 +103,7 @@ const Hero: React.FC = () => {
             <Button 
               href="/portfolio" 
               variant={theme === 'dark' ? 'outline' : 'secondary'}
-              className="w-full sm:w-auto text-[14px] md:text-[15px] px-10 md:px-12 py-5 md:py-7 border-brand/10 hover:border-brand-glow transition-all"
+              className="w-full sm:w-auto text-[14px] md:text-[15px] px-10 md:px-12 py-6 md:py-7 transition-all border-gray-200 dark:border-white/10"
             >
               <span className="flex items-center gap-3">
                  <Play size={18} className="fill-brand text-brand dark:fill-brand-glow dark:text-brand-glow" />
@@ -134,23 +133,24 @@ const Hero: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Right Side Waterfall - Visible only on Desktop */}
-        <div className="hidden lg:flex relative h-[800px] xl:h-[1000px] gap-6 xl:gap-8 perspective-2000 -translate-y-16 rotate-[1deg] scale-105 xl:scale-110">
-          <ScrollingColumn items={col1} duration={45} className="w-1/3" />
-          <ScrollingColumn items={col2} duration={35} className="w-1/3 mt-16 xl:mt-24" />
-          <ScrollingColumn items={col3} duration={55} className="w-1/3 mt-8 xl:mt-12" />
-          <div className="absolute inset-x-0 top-0 h-32 md:h-64 bg-gradient-to-b from-white dark:from-navy-900 via-white/40 dark:via-navy-900/40 to-transparent z-10"></div>
-          <div className="absolute inset-x-0 bottom-0 h-32 md:h-64 bg-gradient-to-t from-white dark:from-navy-900 via-white/40 dark:via-navy-900/40 to-transparent z-10"></div>
+        {/* Right Side Waterfall */}
+        <div className="hidden lg:flex relative h-[800px] xl:h-[900px] gap-6 xl:gap-8 perspective-2000 -translate-y-16 scale-100">
+          <ScrollingColumn items={col1} duration={40} className="w-1/3" />
+          <ScrollingColumn items={col2} duration={30} className="w-1/3 mt-16" />
+          <ScrollingColumn items={col3} duration={50} className="w-1/3 mt-8" />
+          
+          {/* Fades at top and bottom for smoother transitions - Removed the absolute top:0 white bar */}
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-white dark:from-navy-900 to-transparent z-10"></div>
           
           <motion.div 
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-1/4 -left-12 xl:-left-16 z-30 bg-white dark:bg-navy-800 p-4 xl:p-5 rounded-2xl md:rounded-3xl shadow-2xl flex items-center gap-3 xl:gap-4 text-navy-900 dark:text-white border border-gray-100 dark:border-white/10"
+            className="absolute top-1/4 -left-16 z-30 bg-white dark:bg-navy-800 p-5 rounded-3xl shadow-2xl flex items-center gap-4 text-navy-900 dark:text-white border border-gray-100 dark:border-white/10"
           >
             <div className="bg-brand p-2 rounded-xl text-white"><MousePointer2 size={18} /></div>
             <div>
-              <p className="font-black text-[12px] xl:text-[13px] uppercase tracking-tighter leading-none">High ROI Design</p>
-              <p className="text-[9px] xl:text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">Verified Expert</p>
+              <p className="font-black text-[13px] uppercase tracking-tighter leading-none">High ROI Design</p>
+              <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">Verified Expert</p>
             </div>
           </motion.div>
         </div>
