@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronRight, ChevronLeft, CheckCircle2, Sparkles, PhoneCall } from 'lucide-react';
+import { X, ChevronRight, ChevronLeft, Sparkles } from 'lucide-react';
 import Logo from './Logo';
 
 interface QuizModalProps {
@@ -8,9 +8,16 @@ interface QuizModalProps {
   onClose: () => void;
 }
 
-// Environment Variables defined for Vercel visibility
-const CALENDLY_URL = process.env.VITE_CALENDLY_URL || "https://calendly.com/zeemailsr/buxxai-demo-call";
-const FORM_NAME = process.env.VITE_FORM_NAME || "buxxai-leads";
+// Helper to safely access env variables
+const getEnv = (key: string, fallback: string) => {
+  if (typeof process !== 'undefined' && process.env && process.env[key]) {
+    return process.env[key];
+  }
+  return fallback;
+};
+
+const CALENDLY_URL = getEnv("VITE_CALENDLY_URL", "https://calendly.com/zeemailsr/buxxai-demo-call");
+const FORM_NAME = getEnv("VITE_FORM_NAME", "buxxai-leads");
 
 const questions = [
   { id: 1, type: 'text', label: 'What is your First & Last Name?', key: 'full-name', placeholder: 'John Doe' },
@@ -80,7 +87,7 @@ const QuizModal: React.FC<QuizModalProps> = ({ isOpen, onClose }) => {
     const dataToSubmit = finalData || formData;
     setIsSubmitting(true);
     
-    // Simulating Netlify/Vercel form handling
+    // Simulating form handling
     fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -117,7 +124,6 @@ const QuizModal: React.FC<QuizModalProps> = ({ isOpen, onClose }) => {
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             className="relative w-full max-w-2xl bg-white dark:bg-navy-800 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col min-h-[500px]"
           >
-            {/* Header */}
             <div className="px-8 pt-8 pb-4 flex justify-between items-center border-b border-gray-100 dark:border-white/5">
               <Logo className="h-8" />
               <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-white/5 rounded-full transition-colors">
@@ -125,7 +131,6 @@ const QuizModal: React.FC<QuizModalProps> = ({ isOpen, onClose }) => {
               </button>
             </div>
 
-            {/* Progress */}
             {!isSubmitted && (
               <div className="w-full h-1 bg-gray-100 dark:bg-navy-900">
                 <motion.div className="h-full bg-brand dark:bg-brand-glow" animate={{ width: `${progress}%` }} />

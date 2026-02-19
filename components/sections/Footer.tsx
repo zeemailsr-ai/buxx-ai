@@ -6,7 +6,7 @@ import { GoogleGenAI } from "@google/genai";
 import { Sparkles, BrainCircuit } from 'lucide-react';
 
 const Footer: React.FC = () => {
-  const { openQuiz, theme } = useTheme();
+  const { openQuiz } = useTheme();
   const [aiQuote, setAiQuote] = useState<string>("Scaling brands through precision creative.");
   const [isGenerating, setIsGenerating] = useState(false);
   
@@ -18,11 +18,17 @@ const Footer: React.FC = () => {
     { name: 'Pricing', href: '/pricing' },
   ];
 
+  const getApiKey = () => {
+    return typeof process !== 'undefined' && process.env ? process.env.API_KEY : null;
+  };
+
   const generateDesignQuote = async () => {
-    if (!process.env.API_KEY) return;
+    const apiKey = getApiKey();
+    if (!apiKey) return;
+    
     setIsGenerating(true);
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const ai = new GoogleGenAI({ apiKey });
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: "Write a 1-sentence punchy, ambitious vision statement for a subscription-based design agency that values speed and high ROI. No hashtags.",
@@ -37,10 +43,10 @@ const Footer: React.FC = () => {
   };
 
   useEffect(() => {
-    if (process.env.API_KEY) {
-        generateDesignQuote();
-    }
+    generateDesignQuote();
   }, []);
+
+  const apiKeyExists = !!getApiKey();
 
   return (
     <footer className="bg-brand dark:bg-navy-950 text-white py-24 md:py-40 border-t border-white/5 transition-colors duration-500 overflow-hidden relative">
@@ -53,7 +59,6 @@ const Footer: React.FC = () => {
               <Logo className="h-12 md:h-24 lg:h-32" variant="white" />
             </Link>
             
-            {/* AI Generated Tagline */}
             <div className="min-h-[60px] md:min-h-[80px]">
                <p className={`text-white/80 dark:text-gray-300 text-xl md:text-3xl max-w-xl leading-snug mb-10 md:mb-12 font-display font-bold transition-opacity duration-500 ${isGenerating ? 'opacity-40' : 'opacity-100'}`}>
                 {aiQuote}
@@ -88,7 +93,7 @@ const Footer: React.FC = () => {
               ))}
               <button 
                 onClick={openQuiz}
-                className="text-left text-white font-black uppercase tracking-widest underline decoration-2 underline-offset-8 decoration-white/30 hover:decoration-brand-glow dark:hover:decoration-brand-glow transition-all text-lg md:text-xl"
+                className="text-left text-white font-black uppercase tracking-widest underline decoration-2 underline-offset-8 decoration-white/30 hover:decoration-brand-glow transition-all text-lg md:text-xl"
               >
                 Start Trial
               </button>
@@ -103,7 +108,7 @@ const Footer: React.FC = () => {
               
               <div className="pt-10 border-t border-white/5 mt-6 group">
                  <p className="text-white/30 group-hover:text-white/50 text-sm md:text-base font-black uppercase tracking-widest italic leading-loose transition-colors">"The speed of a freelancer, <br/> the quality of an agency."</p>
-                 {process.env.API_KEY && (
+                 {apiKeyExists && (
                    <div 
                     onClick={generateDesignQuote}
                     className="mt-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 text-[9px] font-black uppercase tracking-widest text-white/20 hover:text-white/80 hover:bg-white/10 cursor-pointer transition-all"
@@ -120,7 +125,7 @@ const Footer: React.FC = () => {
         <div className="border-t border-white/5 mt-20 md:mt-32 pt-12 md:pt-16 flex flex-col md:flex-row justify-between items-center text-white/20 text-[10px] font-black uppercase tracking-[0.3em] text-center md:text-left gap-8 md:gap-0">
           <div className="flex flex-col gap-1">
             <p>BUXXAI © {new Date().getFullYear()}. All rights reserved.</p>
-            {process.env.API_KEY && (
+            {apiKeyExists && (
               <p className="text-[8px] flex items-center justify-center md:justify-start gap-1 opacity-50">
                 <Sparkles size={8} /> Augmented by Gemini Intelligence
               </p>

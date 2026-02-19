@@ -10,6 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
     <script>
+      // Global process polyfill for browser compatibility with environment variables
+      window.process = window.process || { env: {} };
+      
       tailwind.config = {
         darkMode: 'class',
         theme: {
@@ -21,7 +24,7 @@
                 light: '#a62441',   
                 surface: '#0f172a', 
                 vivid: '#7d182e',   
-                glow: '#ff4d71', // Vibrant maroon for dark mode visibility
+                glow: '#ff4d71', // High-visibility maroon for dark mode
               },
               cream: {
                 50: '#FDFBF7',
@@ -54,6 +57,12 @@
       .custom-scrollbar::-webkit-scrollbar { width: 4px; }
       .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
       .custom-scrollbar::-webkit-scrollbar-thumb { background: #7d182e; border-radius: 10px; }
+      
+      /* Resolving Header/Hero double gradient clashing */
+      .header-glass {
+        backdrop-filter: blur(12px) saturate(180%);
+        -webkit-backdrop-filter: blur(12px) saturate(180%);
+      }
     </style>
     <script type="importmap">
     {
@@ -71,5 +80,7 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- Entry point script to prevent blank screen -->
+    <script type="module" src="index.tsx"></script>
   </body>
 </html>

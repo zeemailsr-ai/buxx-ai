@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ChevronDown, Mail, Palette, Sparkles, Monitor, Clapperboard, Sun, Moon } from 'lucide-react';
+import { Menu, X, ChevronDown, Mail, Palette, Sparkles, Sun, Moon } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '../ui/Logo';
@@ -13,7 +13,7 @@ const Header: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -37,17 +37,17 @@ const Header: React.FC = () => {
   ];
 
   return (
-    <header className={`fixed z-[100] transition-all duration-500 ease-in-out top-0 left-0 w-full flex justify-center pt-2 md:pt-6 px-4`}>
+    <header className={`fixed z-[100] transition-all duration-500 ease-in-out top-0 left-0 w-full flex justify-center pt-4 md:pt-6 px-4`}>
       <div 
         className={`w-full max-w-[1400px] flex items-center justify-between transition-all duration-500 rounded-full px-6 md:px-12 
           ${scrolled 
-            ? 'bg-white/80 dark:bg-navy-900/80 backdrop-blur-xl h-16 md:h-20 shadow-lg border border-gray-200/20 dark:border-white/5' 
-            : 'bg-transparent h-20 md:h-28 border border-transparent'
+            ? 'header-glass bg-white/70 dark:bg-navy-900/70 h-16 md:h-20 border border-gray-200/10 dark:border-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)]' 
+            : 'bg-transparent h-20 md:h-24 border border-transparent'
           }`}
       >
         {/* Brand Logo */}
         <Link to="/" className="flex-shrink-0 transition-all duration-300 hover:scale-105 py-2">
-          <Logo className="h-8 md:h-12 lg:h-16" variant={theme === 'dark' ? 'white' : 'color'} />
+          <Logo className="h-8 md:h-12 lg:h-14" variant={theme === 'dark' ? 'white' : 'color'} />
         </Link>
 
         {/* Desktop Navigation */}
@@ -76,7 +76,7 @@ const Header: React.FC = () => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 5 }}
-                      className="absolute top-full left-1/2 -translate-x-1/2 w-[260px] bg-white dark:bg-navy-800 rounded-3xl shadow-2xl border border-gray-100 dark:border-white/5 p-4 mt-1 backdrop-blur-xl"
+                      className="absolute top-full left-1/2 -translate-x-1/2 w-[260px] bg-white dark:bg-navy-800 rounded-3xl shadow-2xl border border-gray-100 dark:border-white/5 p-4 mt-2 backdrop-blur-2xl"
                     >
                       <div className="flex flex-col gap-1">
                         {serviceCategories.map((cat) => (
@@ -110,7 +110,7 @@ const Header: React.FC = () => {
 
           <button 
             onClick={openQuiz}
-            className="hidden sm:block bg-brand hover:bg-brand-light text-white font-black text-[12px] uppercase tracking-widest px-8 py-3.5 rounded-full shadow-xl shadow-brand/10 transition-all hover:-translate-y-1 active:scale-95"
+            className="hidden sm:block bg-brand hover:bg-brand-light text-white font-black text-[12px] uppercase tracking-widest px-8 py-3.5 rounded-full shadow-lg shadow-brand/10 transition-all hover:-translate-y-0.5 active:scale-95"
           >
             Start Free Trial
           </button>
@@ -128,10 +128,10 @@ const Header: React.FC = () => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[110] bg-white/95 dark:bg-navy-900/95 backdrop-blur-2xl flex flex-col p-8 xl:hidden"
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            className="fixed inset-0 z-[110] bg-white dark:bg-navy-900 flex flex-col p-8 xl:hidden shadow-2xl"
           >
             <div className="flex justify-between items-center mb-16">
               <Logo className="h-10" variant={theme === 'dark' ? 'white' : 'color'} />
@@ -154,7 +154,7 @@ const Header: React.FC = () => {
               <div className="pt-12">
                 <button 
                   onClick={() => { setMobileMenuOpen(false); openQuiz(); }}
-                  className="w-full bg-brand text-white font-black text-xl uppercase tracking-widest py-6 rounded-3xl shadow-2xl"
+                  className="w-full bg-brand text-white font-black text-xl uppercase tracking-widest py-6 rounded-3xl shadow-2xl shadow-brand/20"
                 >
                   Start Free Trial
                 </button>
