@@ -1,117 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>buXXai | The Human+AI Creative Force</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>buXXai | Unlimited Design & Content Agency</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    <script>
+      // Global process polyfill for browser compatibility with environment variables
+      window.process = window.process || { env: {} };
+      
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                DEFAULT: '#7d182e', // Primary Maroon
+                dark: '#4a0e1b',    
+                light: '#a62441',   
+                surface: '#0f172a', 
+                vivid: '#7d182e',   
+                glow: '#ff4d71', // High-visibility maroon for dark mode
+              },
+              charcoal: '#0f0f0f', // Explicit charcoal for dark sections
+              cream: {
+                50: '#FDFBF7',
+                100: '#F7F3EB',
+                200: '#EBE5D5',
+              },
+              navy: {
+                950: '#01040f',
+                900: '#020617', 
+                800: '#0f172a', 
+                700: '#1e293b', 
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              display: ['Outfit', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
     <style>
-        body { background-color: #0f172a; color: white; font-family: 'Outfit', sans-serif; }
-        .brand-glow { text-shadow: 0 0 15px #7d182e; color: #7d182e; }
-        .cta-button {
-            transition: all 0.3s ease;
-            box-shadow: 0 0 0 rgba(125, 24, 46, 0);
-        }
-        .cta-button:hover {
-            background-color: #ffffff;
-            color: #7d182e;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
-        }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        transition: background-color 0.5s ease;
+        overflow-x: hidden;
+      }
+      .dark body { background-color: #020617; }
+      .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: #7d182e; border-radius: 10px; }
     </style>
-</head>
-<body class="overflow-x-hidden">
-
-    <nav class="fixed top-0 left-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-brand-light/10">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <h1 class="text-3xl font-extrabold tracking-tighter brand-glow">buXXai</h1>
-            <a href="mailto:hello@buxxai.com" class="cta-button bg-brand px-6 py-2.5 rounded-full font-bold text-sm tracking-wide">
-                GET IN TOUCH
-            </a>
-        </div>
-    </nav>
-
-    <header class="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-16 px-6 text-center">
-        <div class="absolute inset-0 opacity-10 pointer-events-none">
-            <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <defs>
-                    <radialGradient id="grad1" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" style="stop-color:#7d182e; stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#0f172a; stop-opacity:1" />
-                    </radialGradient>
-                </defs>
-                <circle cx="50" cy="50" r="120" fill="url(#grad1)" />
-            </svg>
-        </div>
-
-        <div class="relative z-10 max-w-5xl">
-            <p class="text-brand-light font-bold uppercase tracking-widest text-sm mb-4">A ZEE CREATIVES PARTNER AGENCY</p>
-            <h2 class="text-6xl md:text-8xl font-extrabold tracking-tighter leading-none mb-8 bg-gradient-to-b from-white to-white/60 bg-clip-text text-transparent">
-                Unlimited. Creative.<br>Driven by <span class="text-brand-light">Human+AI</span>.
-            </h2>
-            <p class="text-xl md:text-2xl text-slate-300 font-light leading-relaxed max-w-3xl mx-auto mb-16">
-                Your elite creative squad for the digital age. Flat monthly fee. Scale your brand faster than thought possible with AI video, 3D assets, and high-ticket DTC retention.
-            </    header>
-
-    <section class="py-24 px-6 bg-slate-950 border-y border-brand-light/10">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h3 class="text-5xl font-extrabold tracking-tight mb-4">Elite Capabilities</h3>
-                <p class="text-slate-400 text-lg">From retention to generation, we have you covered.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <div class="bg-slate-900 p-8 rounded-3xl border border-white/5 group hover:border-brand-light/30 transition-all duration-300">
-                    
-                    <div class="aspect-video w-full rounded-2xl bg-slate-800 mb-8 border border-white/10 overflow-hidden relative">
-                        <img id="image_video_generation" src="https://images.unsplash.com/photo-1698047025816-72d544837ef5?q=80&w=600&auto=format&fit=crop" alt="AI Generated Video Scene" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <span class="text-xs bg-brand px-3 py-1 rounded-full font-bold">Preview</span>
-                        </div>
-                    </div>
-
-                    <h4 class="text-2xl font-bold mb-3 group-hover:text-brand-light transition-colors">Generative Video</h4>
-                    <p class="text-slate-400 text-base leading-relaxed mb-6">Sora, Veo, Luma—we wield the newest models to create impossible content for social ad campaigns.</p>
-                    <p class="text-brand-light font-bold text-sm tracking-wide flex items-center gap-2">CASE STUDY <span class="group-hover:translate-x-1 transition-transform">→</span></p>
-                </div>
-
-                <div class="bg-slate-900 p-8 rounded-3xl border border-white/5 group hover:border-brand-light/30 transition-all duration-300">
-                    
-                    <div class="aspect-video w-full rounded-2xl bg-slate-800 mb-8 border border-white/10 overflow-hidden relative">
-                        <img id="image_spatial_assets" src="https://images.unsplash.com/photo-1622324075134-8b64b38d39c0?q=80&w=600&auto=format&fit=crop" alt="3D Model render" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <span class="text-xs bg-brand px-3 py-1 rounded-full font-bold">Preview</span>
-                        </div>
-                    </div>
-
-                    <h4 class="text-2xl font-bold mb-3 group-hover:text-brand-light transition-colors">3D & Spatial Assets</h4>
-                    <p class="text-slate-400 text-base leading-relaxed mb-6">Photorealistic product renders for Shopify and immersive assets for Apple Vision Pro/Spatial Computing experiences.</p>
-                    <p class="text-brand-light font-bold text-sm tracking-wide flex items-center gap-2">CASE STUDY <span class="group-hover:translate-x-1 transition-transform">→</span></p>
-                </div>
-
-                <div class="bg-slate-900 p-8 rounded-3xl border border-white/5 group hover:border-brand-light/30 transition-all duration-300">
-                    
-                    <div class="aspect-video w-full rounded-2xl bg-slate-800 mb-8 border border-white/10 overflow-hidden relative">
-                        <img id="image_dtc_retention" src="https://images.unsplash.com/photo-1593720219276-0b1590d97116?q=80&w=600&auto=format&fit=crop" alt="Marketing Strategy Wireframes" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <span class="text-xs bg-brand px-3 py-1 rounded-full font-bold">Preview</span>
-                        </div>
-                    </div>
-
-                    <h4 class="text-2xl font-bold mb-3 group-hover:text-brand-light transition-colors">Klaviyo Retention</h4>
-                    <p class="text-slate-400 text-base leading-relaxed mb-6">8+ years DTC expertise. Deep data segmentation, optimized flows, and hyper-personalized campaigns that drive lifecycle revenue.</p>
-                    <p class="text-brand-light font-bold text-sm tracking-wide flex items-center gap-2">CASE STUDY <span class="group-hover:translate-x-1 transition-transform">→</span></p>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <footer class="py-12 px-6 text-center text-slate-600 border-t border-brand-light/10">
-        <p class="text-sm">buXXai is a high-performance creative studio from <span class="text-slate-400">Zee Creatives</span>.</p>
-        <p class="text-xs mt-2">© 2026 buXXai. All rights Reserved.</p>
-    </footer>
-
-</body>
+    <script type="importmap">
+    {
+      "imports": {
+        "framer-motion": "https://esm.sh/framer-motion@^12.34.0",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+        "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+        "react/": "https://esm.sh/react@^19.2.4/",
+        "react": "https://esm.sh/react@^19.2.4/",
+        "react-router-dom": "https://esm.sh/react-router-dom@6.22.0",
+        "@google/genai": "https://esm.sh/@google/genai@^1.40.0"
+      }
+    }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- Entry point script to prevent blank screen -->
+    <script type="module" src="index.tsx"></script>
+  </body>
 </html>
